@@ -1,0 +1,17 @@
+{
+  "name": "axios-wechat-adapter",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "git@github.com:jaluik/axios-wechat-adapter.git",
+  "author": "jaluik <cqzhengmouren@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsc"
+  },
+  "peerDependencies": {
+    "axios": "0.x"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.4"
+  }
+}
