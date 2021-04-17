@@ -6,7 +6,8 @@
   "author": "jaluik <cqzhengmouren@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "tsc"
+    "dev": "tsc -w  --sourceMap",
+    "build": "tsc"
   },
   "peerDependencies": {
     "axios": "0.x"
