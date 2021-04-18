@@ -1,6 +1,6 @@
 {
   "name": "axios-wechat-adapter",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "repository": "git@github.com:jaluik/axios-wechat-adapter.git",
   "author": "jaluik <cqzhengmouren@gmail.com>",

@@ -1,4 +1,4 @@
-import { AxiosAdapter, Method } from 'axios';
+import { AxiosAdapter, Method, AxiosError } from 'axios';
 import { WechatRequestMethod } from './global';
 
 const methodProcessor = (axiosMethod: Method): WechatRequestMethod => {
@@ -12,12 +12,29 @@ const methodProcessor = (axiosMethod: Method): WechatRequestMethod => {
 };
 
 const wechatAdapter: AxiosAdapter = (config) => {
-  console.log('config', config);
   return new Promise((resolve, reject) => {
-    wx.request({
+    const request = wx.request({
       url: config.url,
       method: methodProcessor(config.method),
       timeout: config.timeout,
+      success: (res) => {
+        const response = {
+          data: res.data,
+          status: res.statusCode,
+          statusText: res.errMsg,
+          headers: res.header,
+          config: config,
+          request: request,
+        };
+        resolve(response);
+      },
+      fail: (res) => {
+        const error = new Error(res.errMsg) as AxiosError;
+        error.config = config;
+        error.request = request;
+        error.isAxiosError = true;
+        reject(error);
+      },
     });
   });
 };
