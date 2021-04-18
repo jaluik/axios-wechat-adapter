@@ -3,9 +3,10 @@
   "include": ["src/**/*"],
   "compilerOptions": {
     "noImplicitAny": false,
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "outDir": "dist",
-    "module": "CommonJS",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "target": "ES6",
     "alwaysStrict": true,
     "allowSyntheticDefaultImports": true
