@@ -7,13 +7,26 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsc -w  --sourceMap",
-    "build": "tsc"
+    "build": "rimraf ./dist && tsc"
   },
   "peerDependencies": {
     "axios": "0.x"
   },
   "devDependencies": {
     "axios": "^0.21.1",
+    "rimraf": "^3.0.2",
     "typescript": "^4.2.4"
-  }
+  },
+  "keywords": [
+    "微信小程序",
+    "axios",
+    "wechat",
+    "axios-adapter"
+  ],
+  "description": "axios微信小程序适配器，可以复用web或者node上的axios请求",
+  "homepage": "https://github.com/jaluik",
+  "files": [
+    "dist/",
+    "src/"
+  ]
 }
