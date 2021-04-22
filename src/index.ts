@@ -1,20 +1,15 @@
-import { AxiosAdapter, Method, AxiosError } from 'axios';
-import { WechatRequestMethod } from './global';
-
-const methodProcessor = (axiosMethod: Method): WechatRequestMethod => {
-  const upperCaseMethod = axiosMethod.toUpperCase();
-  const repeatMethod = ['GET', 'PUT', 'DELETE', 'OPTIONS', 'POST'];
-  if (repeatMethod.includes(upperCaseMethod)) {
-    return upperCaseMethod as WechatRequestMethod;
-  } else {
-    throw new Error(`微信小程序暂不支持${axiosMethod}方法`);
-  }
-};
+import { AxiosAdapter, AxiosError } from 'axios';
+import { methodProcessor, urlProcessor } from './utils';
 
 const wechatAdapter: AxiosAdapter = (config) => {
   return new Promise((resolve, reject) => {
     const request = wx.request({
-      url: config.url,
+      url: urlProcessor(
+        config.baseURL,
+        config.url,
+        config.params,
+        config.paramsSerializer
+      ),
       method: methodProcessor(config.method),
       timeout: config.timeout,
       success: (res) => {
