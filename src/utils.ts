@@ -1,5 +1,5 @@
 import { Method, AxiosRequestConfig } from 'axios';
-import { WechatRequestMethod } from './global';
+import { WechatRequestMethod } from './types';
 
 export const isDate = (val?: any): boolean => {
   return toString.call(val) === '[object Date]';
