@@ -1,5 +1,5 @@
 import { AxiosAdapter, AxiosError } from 'axios';
-import { methodProcessor, urlProcessor } from './utils';
+import { methodProcessor, urlProcessor, dataProcessor } from './utils';
 
 const wechatAdapter: AxiosAdapter = (config) => {
   return new Promise((resolve, reject) => {
@@ -10,6 +10,7 @@ const wechatAdapter: AxiosAdapter = (config) => {
         config.params,
         config.paramsSerializer
       ),
+      data: dataProcessor(config.data),
       method: methodProcessor(config.method),
       timeout: config.timeout,
       success: (res) => {
@@ -19,6 +20,7 @@ const wechatAdapter: AxiosAdapter = (config) => {
           statusText: res.errMsg,
           headers: res.header,
           config: config,
+          profile: res.profile,
           request: request,
         };
         resolve(response);

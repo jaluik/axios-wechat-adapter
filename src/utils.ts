@@ -5,6 +5,19 @@ export const isDate = (val?: any): boolean => {
   return toString.call(val) === '[object Date]';
 };
 
+export const isJSONstr = (str?: any): boolean => {
+  try {
+    return (
+      typeof str === 'string' &&
+      str.length &&
+      (str = JSON.parse(str)) &&
+      Object.prototype.toString.call(str) === '[object Object]'
+    );
+  } catch (error) {
+    return false;
+  }
+};
+
 export const encode = (val: string | number | boolean): string => {
   return encodeURIComponent(val)
     .replace(/%40/gi, '@')
@@ -73,4 +86,11 @@ export const urlProcessor = (
       .join('&');
   }
   return `${fullPath}${connector}${serializedParam}`;
+};
+
+export const dataProcessor = (data?: any) => {
+  if (isJSONstr(data)) {
+    return JSON.parse(data);
+  }
+  return data;
 };
