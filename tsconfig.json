@@ -8,6 +8,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "target": "ES6",
+    "declaration": true,
     "alwaysStrict": true,
     "allowSyntheticDefaultImports": true
   }
