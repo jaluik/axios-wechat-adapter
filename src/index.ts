@@ -1,15 +1,10 @@
-import { AxiosAdapter, AxiosError } from 'axios';
-import { methodProcessor, urlProcessor, dataProcessor } from './utils';
+import axios, { AxiosAdapter, AxiosError } from 'axios';
+import { methodProcessor, dataProcessor } from './utils';
 
 const wechatAdapter: AxiosAdapter = (config) => {
   return new Promise((resolve, reject) => {
     const request = wx.request({
-      url: urlProcessor(
-        config.baseURL,
-        config.url,
-        config.params,
-        config.paramsSerializer
-      ),
+      url: axios.getUri(config),
       data: dataProcessor(config.data),
       method: methodProcessor(config.method),
       timeout: config.timeout,
@@ -26,6 +21,7 @@ const wechatAdapter: AxiosAdapter = (config) => {
         resolve(response);
       },
       fail: (res) => {
+        console.log('res', res);
         const error = new Error(res.errMsg) as AxiosError;
         error.config = config;
         error.request = request;
