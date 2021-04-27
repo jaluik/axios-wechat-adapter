@@ -10,7 +10,7 @@ describe('test adapter', () => {
       request: mockrequest,
     };
   });
-  it('wx.request can request right url', () => {
+  it('wx.request can return right result', () => {
     const promise = axios.get('www.url.com');
     mockrequest.mockImplementation(({ success }) => {
       success({
@@ -22,5 +22,15 @@ describe('test adapter', () => {
       data: 1,
       status: 200,
     });
+  });
+
+  it('wx.request can return error result', () => {
+    const promise = axios.get('www.url.com');
+    mockrequest.mockImplementation(({ fail }) => {
+      fail({
+        errMsg: '请求失败',
+      });
+    });
+    return expect(promise).rejects.toThrowError('请求失败');
   });
 });

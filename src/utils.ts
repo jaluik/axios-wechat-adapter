@@ -47,7 +47,7 @@ export const urlProcessor = (
   params?: AxiosRequestConfig['params'],
   paramsSerializer?: AxiosRequestConfig['paramsSerializer']
 ): string => {
-  const fullPath = /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(path)
+  let fullPath = /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(path)
     ? path
     : `${baseURL || ''}${path || ''}`;
   if (!params) {
@@ -60,7 +60,7 @@ export const urlProcessor = (
     return `${fullPath}${connector}${serializedParam}`;
   }
   if (typeof params === 'string') {
-    serializedParam === params;
+    serializedParam = params;
   }
   if (typeof params === 'object') {
     serializedParam = Object.keys(params)
