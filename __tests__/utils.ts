@@ -64,7 +64,11 @@ describe('Test urlProcessor', () => {
       urlProcessor('https://www.a.com', '/api/uri', {
         a: new Date('1995-12-17T03:24:00'),
       })
-    ).toBe('https://www.a.com/api/uri?a=1995-12-16T19:24:00.000Z');
+    ).toBe(
+      `https://www.a.com/api/uri?a=${new Date(
+        '1995-12-17T03:24:00'
+      ).toISOString()}`
+    );
     expect(urlProcessor('https://www.a.com', '/api/uri?a=1', { b: 2 })).toBe(
       'https://www.a.com/api/uri?a=1&b=2'
     );
