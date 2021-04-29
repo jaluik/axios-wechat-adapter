@@ -66,6 +66,9 @@ export const urlProcessor = (
     serializedParam = Object.keys(params)
       .reduce((prev, key) => {
         const value = params[(key as unknown) as string];
+        if (value === null || value === '') {
+          return prev;
+        }
         if (Array.isArray(value)) {
           value.forEach((item) => {
             prev.push(`${encode(key + '[]')}=${encode(item)}`);
@@ -85,7 +88,7 @@ export const urlProcessor = (
       }, [])
       .join('&');
   }
-  return `${fullPath}${connector}${serializedParam}`;
+  return `${fullPath}${serializedParam ? connector : ''}${serializedParam}`;
 };
 
 export const dataProcessor = (data?: any) => {

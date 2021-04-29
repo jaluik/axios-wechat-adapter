@@ -57,6 +57,9 @@ describe('Test urlProcessor', () => {
     expect(
       urlProcessor('https://www.a.com', '/api/uri', { a: 1, b: 2, c: { d: 4 } })
     ).toBe('https://www.a.com/api/uri?a=1&b=2&c=[object+Object]');
+    expect(urlProcessor('https://www.a.com', '/api/uri', { a: '' })).toBe(
+      'https://www.a.com/api/uri'
+    );
     expect(urlProcessor('https://www.a.com', '/api/uri', { a: [1, 2] })).toBe(
       'https://www.a.com/api/uri?a[]=1&a[]=2'
     );
