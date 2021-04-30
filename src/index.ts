@@ -17,6 +17,7 @@ const wechatAdapter: AxiosAdapter = (config) => {
           config.params,
           config.paramsSerializer
         ),
+        header: config.headers,
         data: dataProcessor(config.data),
         method: methodProcessor(config.method),
         timeout: config.timeout,
