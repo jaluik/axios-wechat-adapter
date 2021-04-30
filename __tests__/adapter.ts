@@ -33,4 +33,17 @@ describe('test adapter', () => {
     });
     return expect(promise).rejects.toThrowError('请求失败');
   });
+
+  it('wx.request can transform 4XX status code to error response', () => {
+    const promise = axios.get('www.url.com');
+    mockrequest.mockImplementation(({ success }) => {
+      success({
+        data: 1,
+        statusCode: 401,
+      });
+    });
+    return expect(promise).rejects.toThrowError(
+      'Request failed with status code 401'
+    );
+  });
 });

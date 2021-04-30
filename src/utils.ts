@@ -1,4 +1,4 @@
-import { Method, AxiosRequestConfig } from 'axios';
+import { Method, AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { WechatRequestMethod } from './types';
 
 export const isDate = (val?: any): boolean => {
@@ -96,4 +96,53 @@ export const dataProcessor = (data?: any) => {
     return JSON.parse(data);
   }
   return data;
+};
+
+/** 正确返回处理器
+ * 默认情况下 4xx、5xx请求在微信小程序中属于成功的返回
+ * 因此这里需要对successResult做一次判断过滤
+ *
+ */
+export const successResProcessor = (
+  resolve: (val: AxiosResponse) => void,
+  reject: (err: AxiosError) => void,
+  res: any,
+  config: AxiosRequestConfig,
+  request: () => void
+) => {
+  //保持和web逻辑一致
+  if (config.validateStatus && !config.validateStatus(res.statusCode)) {
+    const error = new Error(
+      `Request failed with status code ${res.statusCode}`
+    ) as AxiosError;
+    error.config = config;
+    error.request = request;
+    error.isAxiosError = true;
+    reject(error);
+  }
+  const { data, statusCode, errMsg, header, ...restResult } = res;
+  const response = {
+    data: data,
+    status: statusCode,
+    statusText: errMsg,
+    headers: header,
+    config: config,
+    request,
+    ...restResult,
+  };
+  resolve(response);
+};
+
+/** 错误返回处理器 */
+export const failResProcessor = (
+  reject: (err: AxiosError) => void,
+  res: any,
+  config: AxiosRequestConfig,
+  request: () => void
+) => {
+  const error = new Error(res.errMsg) as AxiosError;
+  error.config = config;
+  error.request = request;
+  error.isAxiosError = true;
+  reject(error);
 };
