@@ -110,16 +110,6 @@ export const successResProcessor = (
   config: AxiosRequestConfig,
   request: () => void
 ) => {
-  //保持和web逻辑一致
-  if (config.validateStatus && !config.validateStatus(res.statusCode)) {
-    const error = new Error(
-      `Request failed with status code ${res.statusCode}`
-    ) as AxiosError;
-    error.config = config;
-    error.request = request;
-    error.isAxiosError = true;
-    reject(error);
-  }
   const { data, statusCode, errMsg, header, ...restResult } = res;
   const response = {
     data: data,
@@ -130,6 +120,17 @@ export const successResProcessor = (
     request,
     ...restResult,
   };
+  //保持和web逻辑一致
+  if (config.validateStatus && !config.validateStatus(statusCode)) {
+    const error = new Error(
+      `Request failed with status code ${statusCode}`
+    ) as AxiosError;
+    error.config = config;
+    error.request = request;
+    error.response = response;
+    error.isAxiosError = true;
+    reject(error);
+  }
   resolve(response);
 };
 
