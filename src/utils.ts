@@ -130,6 +130,7 @@ export const successResProcessor = (
     error.response = response;
     error.isAxiosError = true;
     reject(error);
+    return;
   }
   resolve(response);
 };
