@@ -9,7 +9,9 @@
   "scripts": {
     "dev": "tsc -w  --sourceMap",
     "test": "jest --collectCoverage",
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc",
+    "release": "npm version patch",
+    "postversion": "git push --follow-tags"
   },
   "peerDependencies": {
     "axios": "0.x"
